@@ -138,3 +138,4 @@ D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\obj\Debug\net8.0\ref\Proje
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Moq.dll
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Elasticsearch.Net.dll
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Nest.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\obj\Debug\net8.0\ProjectWarrantyRecordGrpcServer.Tests.sourcelink.json

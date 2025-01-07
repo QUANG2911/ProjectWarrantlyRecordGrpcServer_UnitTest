@@ -44,7 +44,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             int expectedTask = 1; // id task sửa chữa mới
 
-            // Cấu hình mock cho ICustomerService
+            // Cấu hình mock cho 
             A.CallTo(() => _mockTaskService.CreateNewStaffTask(request)).Returns(expectedTask);
             //Act
             var response = await _taskGrpcService.CreateRepairManagement(request, null);
@@ -67,38 +67,29 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
                 IdStaff = 1
             };
 
-            var expectedTask = new List<ItemInListStaffTaskDto>
+            var expectedTask = new ReadItemRepairManagementResponse
             {
-                new ItemInListStaffTaskDto
-                {                    
-                    CustomerName = "Nguyễn Văn A",
-                    CustomerPhone = "098xx890xx",
-                    IdTask = 1,
-                    DateOfTask = DateOnly.Parse("12/01/2025"),
-                    DateOfWarranty = DateOnly.Parse("12/01/2024"),
-                    IdWarrantyRecord = 1,
-                    StatusTask = 1
-                }
+                IdTask = 1,
+                CustomerName = "Nguyễn Văn A",
+                CustomerPhone = "098xx890xx",
+                DateOfTask = "12/01/2025",
+                DateOfWarranty = "12/01/2024",
+                IdWarrantRecord = 1,
+                StatusTask = 1
             };
+            var expectedTaskList = new GetListRepairManagementResponse();
+            expectedTaskList.ToList.Add(expectedTask);
 
-            // Cấu hình mock cho ICustomerService
-            A.CallTo(() => _mockTaskService.GetListStaffTask(request.IdStaff)).Returns(expectedTask);
+
+            // Cấu hình mock cho
+            A.CallTo(() => _mockTaskService.GetListStaffTask(request.IdStaff)).Returns(expectedTaskList);
             //Act
             var response = await _taskGrpcService.ListRepairManagement(request, null);
 
             // Assert
             Assert.NotNull(response);
 
-            Assert.Equal(expectedTask.Count, response.ToList.Count);
-
-            var firstCustomer = response.ToList.First();
-            Assert.Equal(expectedTask.First().IdWarrantyRecord, firstCustomer.IdWarrantRecord);
-            Assert.Equal(expectedTask.First().IdTask, firstCustomer.IdTask);
-            Assert.Equal(expectedTask.First().StatusTask, firstCustomer.StatusTask);
-            Assert.Equal("12/1/2024", firstCustomer.DateOfWarranty);
-            Assert.Equal(expectedTask.First().CustomerName, firstCustomer.CustomerName);
-            Assert.Equal(expectedTask.First().CustomerPhone, firstCustomer.CustomerPhone);
-            Assert.Equal("12/1/2025", firstCustomer.DateOfTask);
+            Assert.Equal(expectedTaskList, response);
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockTaskService.GetListStaffTask(request.IdStaff)).MustHaveHappenedOnceExactly();
@@ -113,41 +104,32 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
                 IdTask = 1
             };
 
-            var expectedTask = new List<ItemInListStaffTaskDto>
+            var expectedTask = new GetItemRepaitPartInWarrantyReponce
             {
-                new ItemInListStaffTaskDto
-                {
-                    CustomerName = "Nguyễn Văn A",
-                    CustomerPhone = "098xx890xx",
-                    IdTask = 1,
-                    DateOfTask = DateOnly.Parse("12/01/2025"),
-                    DateOfWarranty = DateOnly.Parse("12/01/2024"),
-                    IdWarrantyRecord = 1,
-                    StatusTask = 1
-                }
+                IdTask = 1,
+                CustomerName = "Nguyễn Văn A",
+                CustomerPhone = "098xx890xx",
+                Amount = 1,
+                Price = 1000,
+                ReasonBringFix ="Hỏng màn",
+                RepairPartName ="Card màn hình",
+                StatusTask = 1
             };
+            var expectedTaskList = new ReadRepairManagementResponse();
+            expectedTaskList.ToRepairPartList.Add(expectedTask);
 
             // Cấu hình mock cho ICustomerService
-            A.CallTo(() => _mockTaskService.GetListStaffTask(request.IdStaff)).Returns(expectedTask);
+            A.CallTo(() => _mockTaskService.GetStaffTaskDone(request.IdTask)).Returns(expectedTaskList);
             //Act
-            var response = await _taskGrpcService.ListRepairManagement(request, null);
+            var response = await _taskGrpcService.ReadRepairManagement(request, null);
 
             // Assert
             Assert.NotNull(response);
 
-            Assert.Equal(expectedTask.Count, response.ToList.Count);
-
-            var firstCustomer = response.ToList.First();
-            Assert.Equal(expectedTask.First().IdWarrantyRecord, firstCustomer.IdWarrantRecord);
-            Assert.Equal(expectedTask.First().IdTask, firstCustomer.IdTask);
-            Assert.Equal(expectedTask.First().StatusTask, firstCustomer.StatusTask);
-            Assert.Equal("12/1/2024", firstCustomer.DateOfWarranty);
-            Assert.Equal(expectedTask.First().CustomerName, firstCustomer.CustomerName);
-            Assert.Equal(expectedTask.First().CustomerPhone, firstCustomer.CustomerPhone);
-            Assert.Equal("12/1/2025", firstCustomer.DateOfTask);
+            Assert.Equal(expectedTaskList, response);
 
             // Kiểm tra tương tác
-            A.CallTo(() => _mockTaskService.GetListStaffTask(request.IdStaff)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTaskService.GetStaffTaskDone(request.IdTask)).MustHaveHappenedOnceExactly();
         }
     }
 }

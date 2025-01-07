@@ -30,20 +30,20 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         public async Task ListCustomerManagement_ReturnOk()
         {
             // Arrange
-            var expectedCustomers = new List<Customer>
+            var expectedCustomers = new GetItemInListCustomerResponse
             {
-                new Customer
-                {
-                    IdCustomer = 1,
-                    CustomerAddress = "Tp.Thủ Đức, Tp.Hồ Chí Minh",
-                    CustomerEmail = "anv@gmail.com",
-                    CustomerName = "Nguyễn Văn A",
-                    CustomerPhone = "098xx890xx"
-                }
+                IdCusomer = 1,
+                CustomerAdrress = "Tp.Thủ Đức, Tp.Hồ Chí Minh",
+                CustomerEmail = "anv@gmail.com",
+                CustomerName = "Nguyễn Văn A",
+                CustomerPhone = "098xx890xx"
+           
             };
 
+            var expectedList = new GetListCustomerManagementResponse();
+            expectedList.ToCustomerList.Add(expectedCustomers);
             // Cấu hình mock cho ICustomerService
-            A.CallTo(() => _mockCustomerService.GetListCustomer()).Returns(expectedCustomers);
+            A.CallTo(() => _mockCustomerService.GetListCustomer()).Returns(expectedList);
 
             var request = new GetListCustomerManagementRequest();
 
@@ -52,14 +52,8 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Assert
             Assert.NotNull(response);
-            Assert.Single(response.ToCustomerList);
-
-            var firstCustomer = response.ToCustomerList.First();
-            Assert.Equal(1, firstCustomer.IdCusomer);
-            Assert.Equal("Nguyễn Văn A", firstCustomer.CustomerName);
-            Assert.Equal("098xx890xx", firstCustomer.CustomerPhone);
-            Assert.Equal("anv@gmail.com", firstCustomer.CustomerEmail);
-            Assert.Equal("Tp.Thủ Đức, Tp.Hồ Chí Minh", firstCustomer.CustomerAdrress);
+            
+            Assert.Equal(expectedList, response);
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetListCustomer()).MustHaveHappenedOnceExactly();
@@ -69,25 +63,24 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         public async Task ReadCustomerManagement_ReturnOk()
         {
             // Arrange
-            var expectedCustomers = new List<DetailCustomerDto>
+            var expectedCustomers = new ReadItemDeviceCustomerManagementResponse
             {
-                new DetailCustomerDto
-                {
-                    IdCusomer = 1,
-                    CustomerAdrress = "Tp.Thủ Đức, Tp.Hồ Chí Minh",
-                    CustomerEmail = "anv@gmail.com",
-                    CustomerName = "Nguyễn Văn A",
-                    CustomerPhone = "098xx890xx",
-                    CustomerDevice = "Máy tính",
-                    DateOfWarrant = DateOnly.Parse("12/01/2024"),
-                    IdWarrantReport = 1,
-                    TimeEnd = DateOnly.Parse("12/01/2025")
-                }
+                IdCusomer = 1,
+                CustomerAdrress = "Tp.Thủ Đức, Tp.Hồ Chí Minh",
+                CustomerEmail = "anv@gmail.com",
+                CustomerName = "Nguyễn Văn A",
+                CustomerPhone = "098xx890xx",
+                CustomerDevice = "Máy tính",
+                DateOfWarrant = "12/01/2024",
+                IdWarrantReport = 1,
+                TimeEnd = "12/01/2025"
+                
             };
-
+            var expectedList = new ReadCustomerManagementResponse();
+            expectedList.ToDeviceList.Add(expectedCustomers); 
             // Cấu hình mock cho ICustomerService
             var request = new ReadCustomerRequest { IdCusomer = 1 };
-            A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).Returns(expectedCustomers);
+            A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).Returns(expectedList);
             
 
             //Act
@@ -95,17 +88,9 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Assert
             Assert.NotNull(response);
-            Assert.Single(response.ToDeviceList);
 
-            var firstCustomer = response.ToDeviceList.First();
-            Assert.Equal(1, firstCustomer.IdCusomer);
-            Assert.Equal("Nguyễn Văn A", firstCustomer.CustomerName);
-            Assert.Equal("098xx890xx", firstCustomer.CustomerPhone);
-            Assert.Equal("anv@gmail.com", firstCustomer.CustomerEmail);
-            Assert.Equal("Tp.Thủ Đức, Tp.Hồ Chí Minh", firstCustomer.CustomerAdrress);
-            Assert.Equal("Máy tính", firstCustomer.CustomerDevice);
-            Assert.Equal("12/1/2024", firstCustomer.DateOfWarrant);
-            Assert.Equal("12/1/2025", firstCustomer.TimeEnd);
+            Assert.Equal(expectedList, response);
+
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).MustHaveHappenedOnceExactly();
         }
