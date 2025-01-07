@@ -121,7 +121,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
             // Cấu hình mock cho ICustomerService
             A.CallTo(() => _mockTaskService.GetStaffTaskDone(request.IdTask)).Returns(expectedTaskList);
             //Act
-            var response = await _taskGrpcService.ReadRepairManagement(request, null);
+            var response = await _taskGrpcService.ReadRepairDone(request, null);
 
             // Assert
             Assert.NotNull(response);
