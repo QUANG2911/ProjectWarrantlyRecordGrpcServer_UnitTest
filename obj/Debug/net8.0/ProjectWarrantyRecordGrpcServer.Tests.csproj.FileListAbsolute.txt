@@ -139,3 +139,13 @@ D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Moq.dll
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Elasticsearch.Net.dll
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Nest.dll
 D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\obj\Debug\net8.0\ProjectWarrantyRecordGrpcServer.Tests.sourcelink.json
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.AspNetCore.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+D:\ThucTap\Grpc\ProjectWarrantyRecordGrpcServer.Tests\bin\Debug\net8.0\Serilog.Sinks.File.dll
