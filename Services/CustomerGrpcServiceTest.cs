@@ -58,6 +58,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetListCustomer()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -96,6 +97,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).MustHaveHappenedOnceExactly();
         }
     }
 }

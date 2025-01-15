@@ -57,6 +57,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockWarranyRecordService.GetListWarrantyList()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).MustHaveHappenedOnceExactly();
         }
     }
 }
