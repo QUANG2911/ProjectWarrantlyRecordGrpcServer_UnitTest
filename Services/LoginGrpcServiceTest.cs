@@ -16,15 +16,15 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         private readonly ILoginService _mockLoginService;
         private readonly ILogger<LoginGrpcService> _mockLogger;
         private readonly LoginGrpcService _loginGrpcService;
-
+        private readonly ITokenService _mockTokenService;
         public LoginGrpcServiceTest()
         {
             // Tạo mock cho ICustomerService và ILogger
             _mockLoginService = A.Fake<ILoginService>();
             _mockLogger = A.Fake<ILogger<LoginGrpcService>>();
-
+            _mockTokenService = A.Fake<ITokenService>();
             // Truyền mock vào lớp CustomerGrpcService
-            _loginGrpcService = new LoginGrpcService(_mockLoginService, _mockLogger);
+            _loginGrpcService = new LoginGrpcService(_mockLoginService, _mockLogger, _mockTokenService);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
             var expextToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzY4NDAxMTAsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwNTkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDU5In0.4PxHbNHkvYlmLCqIzZl8cTedTokmsCec4N5n9ZwImno";
 
             A.CallTo(() => _mockLoginService.GetLogin(request.IdStaff,request.Pass)).Returns(expextData);
-            A.CallTo(() => _mockLoginService.GetToken(request.IdStaff)).Returns(expextToken);
+            A.CallTo(() => _mockTokenService.GetToken(request.IdStaff)).Returns(expextToken);
             //Act
             var response = await _loginGrpcService.GetLogin(request, null);
 
@@ -49,6 +49,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockLoginService.GetLogin(request.IdStaff, request.Pass)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.GetToken(request.IdStaff)).MustHaveHappenedOnceExactly();
         }
     }
 }
