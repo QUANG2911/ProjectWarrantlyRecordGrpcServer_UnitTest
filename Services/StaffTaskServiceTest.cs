@@ -127,5 +127,30 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
             // Kiểm tra tương tác
             A.CallTo(() => _mockTaskService.GetStaffTaskDone(request.IdTask)).MustHaveHappenedOnceExactly();
         }
+
+        [Fact]
+        public async Task UpdateRepairManagement_ReturnOk()
+        {
+            //Arrange
+            var request = new UpdateRepairManagementRequest { IdStaff = 1, IdTask = 1, StatusTask = 1 };
+
+            var expectedTask = request.IdTask;
+
+            //Cấu hình mock
+            A.CallTo(() => _mockTaskService.UpdateStaffTask(request)).Returns(expectedTask);
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).Returns("done");
+
+            //Act
+            var response = await _taskGrpcService.UpdateRepairManagement(request, null);
+
+            //Assert
+            Assert.NotNull(response);
+
+            Assert.Equal(expectedTask, response.IdTask);
+
+            // Kiểm tra tương tác
+            A.CallTo(() => _mockTaskService.UpdateStaffTask(request)).MustHaveHappenedOnceExactly();
+
+        }
     }
 }
