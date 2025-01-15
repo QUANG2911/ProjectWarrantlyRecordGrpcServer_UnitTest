@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectWarrantyRecordGrpcServer.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+108246c765c6b6ba3ef15ab8bb4ba6eb094933e7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55b2e7d5a83f23e914de53efdf67bd9547260837")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectWarrantyRecordGrpcServer.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectWarrantyRecordGrpcServer.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
