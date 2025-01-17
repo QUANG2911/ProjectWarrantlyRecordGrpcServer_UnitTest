@@ -1,5 +1,6 @@
 ﻿
 using FakeItEasy;
+using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using ProjectWarrantlyRecordGrpcServer.Interface;
 using ProjectWarrantlyRecordGrpcServer.Model;
@@ -15,12 +16,14 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         private readonly ILogger<CustomerGrpcService> _mockLogger;
         private readonly CustomerGrpcService _customerGrpcService;
         private readonly ITokenService _mockTokenService;
+        private readonly ServerCallContext _mockContext;
         public CustomerGrpcServiceTest()
         {
             // Tạo mock cho ICustomerService và ILogger
             _mockCustomerService = A.Fake<ICustomerService>();
             _mockLogger = A.Fake<ILogger<CustomerGrpcService>>();
             _mockTokenService = A.Fake<ITokenService>();
+            _mockContext = A.Fake<ServerCallContext>();
             // Truyền mock vào lớp CustomerGrpcService
             _customerGrpcService = new CustomerGrpcService(_mockCustomerService, _mockTokenService,_mockLogger);
         }
@@ -47,9 +50,9 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
             var request = new GetListCustomerManagementRequest();
 
             request.IdStaff = 1;
-            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).Returns("done");
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, _mockContext)).Returns("done");
             // Act
-            var response = await _customerGrpcService.ListCustomerManagement(request, null);
+            var response = await _customerGrpcService.ListCustomerManagement(request, _mockContext);
 
             // Assert
             Assert.NotNull(response);
@@ -58,7 +61,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetListCustomer()).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, _mockContext)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -85,10 +88,10 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
 
             A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).Returns(expectedList);
-            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).Returns("done");
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, _mockContext)).Returns("done");
 
             //Act
-            var response = await _customerGrpcService.ReadCustomerManagement(request, null);
+            var response = await _customerGrpcService.ReadCustomerManagement(request, _mockContext);
 
             // Assert
             Assert.NotNull(response);
@@ -97,7 +100,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             // Kiểm tra tương tác
             A.CallTo(() => _mockCustomerService.GetDetailCustomer(request.IdCusomer)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, null)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _mockTokenService.CheckTokenIdStaff(request.IdStaff, _mockContext)).MustHaveHappenedOnceExactly();
         }
     }
 }

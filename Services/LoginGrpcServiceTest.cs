@@ -1,4 +1,5 @@
 ﻿using FakeItEasy;
+using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using ProjectWarrantlyRecordGrpcServer.Interface;
 using ProjectWarrantlyRecordGrpcServer.Protos;
@@ -17,12 +18,14 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         private readonly ILogger<LoginGrpcService> _mockLogger;
         private readonly LoginGrpcService _loginGrpcService;
         private readonly ITokenService _mockTokenService;
+        private readonly ServerCallContext _mockContext;
         public LoginGrpcServiceTest()
         {
             // Tạo mock cho ICustomerService và ILogger
             _mockLoginService = A.Fake<ILoginService>();
             _mockLogger = A.Fake<ILogger<LoginGrpcService>>();
             _mockTokenService = A.Fake<ITokenService>();
+            _mockContext = A.Fake<ServerCallContext>();
             // Truyền mock vào lớp CustomerGrpcService
             _loginGrpcService = new LoginGrpcService(_mockLoginService, _mockLogger, _mockTokenService);
         }
@@ -39,7 +42,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
             A.CallTo(() => _mockLoginService.GetLogin(request.IdStaff,request.Pass)).Returns(expextData);
             A.CallTo(() => _mockTokenService.GetToken(request.IdStaff)).Returns(expextToken);
             //Act
-            var response = await _loginGrpcService.GetLogin(request, null);
+            var response = await _loginGrpcService.GetLogin(request, _mockContext);
 
             // Assert
             Assert.NotNull(response);

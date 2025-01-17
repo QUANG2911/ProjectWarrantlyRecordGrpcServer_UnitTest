@@ -1,4 +1,5 @@
 ﻿using FakeItEasy;
+using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using ProjectWarrantlyRecordGrpcServer.Interface;
 using ProjectWarrantlyRecordGrpcServer.Protos;
@@ -16,13 +17,13 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
         private readonly IRepairPart _mockRepairPartService;
         private readonly ILogger<RepairPartGrpcService> _mockLogger;
         private readonly RepairPartGrpcService _repairPartGrpcService;
-
+        private readonly ServerCallContext _mockContext;
         public RepairPartGrpcServiceTest()
         {
             // Tạo mock cho ICustomerService và ILogger
             _mockRepairPartService = A.Fake<IRepairPart>();
             _mockLogger = A.Fake<ILogger<RepairPartGrpcService>>();
-
+            _mockContext = A.Fake<ServerCallContext>();
             // Truyền mock vào lớp CustomerGrpcService
             _repairPartGrpcService = new RepairPartGrpcService(_mockRepairPartService, _mockLogger);
         }
@@ -43,7 +44,7 @@ namespace ProjectWarrantyRecordGrpcServer.Tests.Services
 
             A.CallTo(() => _mockRepairPartService.GetListRepairPart()).Returns(expextList);
             //Act
-            var response = await _repairPartGrpcService.ListRepairPartManagement(request, null);
+            var response = await _repairPartGrpcService.ListRepairPartManagement(request, _mockContext);
 
             // Assert
             Assert.NotNull(response);
